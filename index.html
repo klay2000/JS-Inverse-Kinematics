@@ -1,0 +1,46 @@
+<script src="planck.js"></script>
+<script src="two.min.js"></script>
+<script src="segment.js"></script>
+<script src="kinematics.js"></script>
+
+<div id="two" onmousemove="handler()" />
+
+<script>
+  var params = { width: 1000, height: 1000 };
+  var two = new Two(params).appendTo(document.getElementById("two"));
+
+  var segments = [
+    new Segment(0, 0, 0, 50, two),
+    new Segment(0, 0, 0, 50, two),
+    new Segment(0, 0, 0, 50, two)
+  ];
+
+  segments[0].setPosition(500, 500);
+
+  var angles = [0, 0, 0];
+
+  n = 0;
+
+  var circle = two.makeCircle(0, 0, 10);
+
+  var x = 0;
+  var y = 0;
+
+  setInterval(function() {
+    n += 0.01;
+
+    // x = Math.cos(n * 3) * 150 + 500;
+    // y = Math.sin(n / 4) * 100 + 500;
+
+    circle.translation.set(x, y);
+
+    inverseKinematics(segments, x, y, 1, 0.0001);
+    two.update();
+  }, 60 / 1000);
+
+  function handler() {
+    var e = window.event;
+    x = e.clientX;
+    y = e.clientY;
+  }
+</script>
